@@ -40,7 +40,9 @@ class passwordless {
           // comment the line below if you want to remove code from results (recommended)
           $res['code'] = $code;
         } else {
+          $_SESSION['email'] = $email;
           $res['emailSuccess'] = false;
+          $res['code'] = $code;
         }
       } else {
         // Let user know that the email is invalid
@@ -120,21 +122,29 @@ class passwordless {
           $res['loggedin'] = true;
         }
       } else {
+
         // Each time it fails, increment the trial times by 1
         // but first check if the a trial has been initiated
         if (isset($_SESSION['trial'])) {
-          $_SESSION['trial'] += 1;
+          // Check if the number is still within limit
+          if ($_SESSION['trial'] <= $this->trial) {
+            $_SESSION['trial'] += 1;
+          }
         } else {
           $_SESSION['trial'] = 0;
         }
+
         // Also check if the limit has been reached
-        if ($_SESSION['trial'] >= $this->trial) {
+        if ($_SESSION['trial'] > $this->trial) {
           // If limit has been reached, resend an email
-          $res['newdetail'] = json_decode($this->sendCode($_SESSION['email']));
+          if (isset($_SESSION['email'])) {
+            $res['detail'] = 'You have reached your limit. Get another code.';
+          } else {
+            $res['detail'] = 'You have reached your limit';
+          }
           // Setup the return array variable
           $res['info'] = 'error';
           $res['loggedin'] = false;
-          $res['detail'] = 'You have reached your limit. New code sent to Email';
         } else {
           $res['info'] = 'error';
           $res['loggedin'] = false;
