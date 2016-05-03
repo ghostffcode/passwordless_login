@@ -33,14 +33,14 @@ class passwordless {
         // Send the code as email to the user
         if ($this->sendEmail($email, $code)) {
           $_SESSION['code'] = $code;
-          $res['code'] = $_SESSION['code'];
           $_SESSION['email'] = $email;
           // Set a trial counter in the session
           $_SESSION['trial'] = 0;
           $res['emailSuccess'] = true;
+          // comment the line below if you want to remove code from results (recommended)
+          $res['code'] = $code;
         } else {
           $res['emailSuccess'] = false;
-          $res['code'] = $code;
         }
       } else {
         // Let user know that the email is invalid
@@ -100,13 +100,13 @@ class passwordless {
   }
 
   public function validate ($code = '') {
-    $res = ['info'=> '', 'loggedin' => false, 'detail'=> null];
+    $res = ['info'=> 'error', 'loggedin' => false, 'detail'=> null];
     // This function will validate the code emailed to the user
 
     // Check to be sure is not logged in already
     if (!isset($_SESSION['loggedin'])) {
       // Check if the input is a number and session is set
-      if (is_numeric($code) && isset($_SESSION)) {
+      if (is_numeric($code) && isset($_SESSION) && (isset($_SESSION['code']))) {
         // Check if code matches the code in session
         if ($code === $_SESSION['code']) {
           // if true, log the user in by setting up necessary session values
@@ -121,7 +121,12 @@ class passwordless {
         }
       } else {
         // Each time it fails, increment the trial times by 1
-        if (isset($_SESSION['trial'])) { $_SESSION['trial'] += 1; }
+        // but first check if the a trial has been initiated
+        if (isset($_SESSION['trial'])) {
+          $_SESSION['trial'] += 1;
+        } else {
+          $_SESSION['trial'] = 0;
+        }
         // Also check if the limit has been reached
         if ($_SESSION['trial'] >= $this->trial) {
           // If limit has been reached, resend an email
@@ -133,7 +138,7 @@ class passwordless {
         } else {
           $res['info'] = 'error';
           $res['loggedin'] = false;
-          $res['detail'] = 'Code you entered is invalid';
+          $res['detail'] = 'Code you entered is invalid/expired';
         }
       }
     } else {
