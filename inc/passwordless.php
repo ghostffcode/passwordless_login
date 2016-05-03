@@ -149,7 +149,7 @@ class passwordless {
     }
   }
 
-  public function isLoggedIn () {
+  public function loggedIn () {
     // This function will check and see if the user is logged in
     $res = false;
     // Check if the session isset
