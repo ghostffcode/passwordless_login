@@ -50,6 +50,3 @@ $p->logOut();
 // Use this to logout and redirect to nice.php
 $p->logOut('nice.php');
 ```
-
-### Increase number of login trials
-To increase the number of login trials, you can change private variable in the passwordless class file. The variable name is `$trial`.
