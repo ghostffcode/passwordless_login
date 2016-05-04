@@ -6,19 +6,24 @@
 
 class passwordless {
 
-  private $format = 'json';
-  private $trial = 3;
-  private $show = false;
+  private $format = 'json',
+          $trial = 3,
+          $show = false,
+          $env = 'prod';
 
-  function __construct($f = '', $sh = false) {
+  function __construct($f = '', $sh = false, $env = 'prod') {
     // Start a user session on class instance
     session_start();
     // Check specified format
-    if (!empty($f) && $f == 'array') {
+    if (!empty($f) && $f === 'array') {
       $this->format = 'array';
     }
     // Handle if code should be returned as part of result
     ($sh) ? $this->show = true : $this->show = false;
+    // Check environment code is running in and setup accordingly
+    if ($env == 'dev') {
+      $this->env = 'dev';
+    }
   }
 
   public function sendCode ($email = '') {
@@ -44,6 +49,12 @@ class passwordless {
         } else {
           $_SESSION['email'] = $email;
           $res['emailSuccess'] = false;
+          // If in development environment, act like everything went well
+          if ($this->env == 'dev') {
+            $res['code'] = $code;
+            $_SESSION['code'] = $code;
+            $_SESSION['trial'] = 0;
+          }
         }
       } else {
         // Let user know that the email is invalid
