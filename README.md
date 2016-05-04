@@ -10,10 +10,11 @@ Simple php passwordless login system
 include 'inc/passwordless.php';
 
 // Create an instance of the passwordless class.
-// It takes two arguments
+// It takes three arguments
 // First one is what format to present results, which can be either json or array. Defaults to json if no argument is passed.
-// Second argument is if you want to return passphrase in result, can either be true or false. (optional)
-$p = new passwordless('json', false);
+// Second argument specifies running environment, can be 'dev' for development or 'prod' for production
+// Third argument is if you want to return passphrase in result, can either be true or false. (optional)
+$p = new passwordless('json','dev', false);
 
 // To send code to email and create session
 // sendCode() method handles email validation too
