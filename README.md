@@ -23,5 +23,12 @@ $p->sendCode('trial@example.com');  // pass email as argument to sendCode() meth
 ```php
 $code = 23456;
 // Add user code to validate() method
-$p->validate($code);
+$p->validate($code); //will log user in if successful
+```
+
+### Check if user is logged in
+You have to use this in every page that user must be logged in to view
+```php
+// returns true if user is logged in and false if not logged in
+$p->loggedIn();
 ```
