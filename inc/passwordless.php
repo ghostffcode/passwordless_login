@@ -8,7 +8,7 @@ class passwordless {
 
   private $format = 'json';
   private $trial = 3;
-  $private $show = false;
+  private $show = false;
 
   function __construct($f = '', $sh = false) {
     // Start a user session on class instance
