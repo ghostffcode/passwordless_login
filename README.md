@@ -32,3 +32,13 @@ You have to use this in every page that user must be logged in to view
 // returns true if user is logged in and false if not logged in
 $p->loggedIn();
 ```
+### To log out and destroy session
+```php
+// This will log user out and redirect to homepage (index.php)
+// You can pass in redirect location as argument
+// Use this to logout and redirect to index.php
+$p->logOut();
+
+// Use this to logout and redirect to nice.php
+$p->logOut('nice.php');
+```
