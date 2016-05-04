@@ -7,7 +7,7 @@ error_reporting(-1);
 
 include 'inc/passwordless.php';
 
-$p = new passwordless('json');
+$p = new passwordless('json', true);  // remove second argument in production
 
 if (isset($_GET['code'])) {
   echo $p->validate($_GET['code']);
