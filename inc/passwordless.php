@@ -113,9 +113,14 @@ class passwordless {
     return $res;
   }
 
-  public function validate ($code = '') {
+  public function validate ($code = '', $trial = 3) {
     $res = ['info'=> 'error', 'loggedin' => false, 'detail'=> null];
     // This function will validate the code emailed to the user
+
+    // convert number of trials to number
+    if (isset($trial) && is_numeric($trial)) {
+      $this->trial = (int)$trial;
+    }
 
     // Check to be sure is not logged in already
     if (!isset($_SESSION['loggedin'])) {
