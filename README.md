@@ -2,6 +2,8 @@
 Simple php passwordless login system
 
 ## How to use
+
+### Send code to email and create session
 ```php
 <?php
 // include class file to your working script
@@ -12,6 +14,6 @@ include 'inc/passwordless.php';
 $p = new passwordless('json');
 
 // To send code to email and create session
-$p->sendCode('trial@example.com');
+$p->sendCode('trial@example.com');  // pass email as argument to sendCode() method
 ?>
 ```
