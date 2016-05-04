@@ -1,7 +1,7 @@
 <?php
 /**
  * This is a simple user authentication system without password
- * It only works and asks the user for the code sent to their email address to work
+ * It only asks the user for the code sent to their email address
  */
 
 class passwordless {
@@ -11,7 +11,7 @@ class passwordless {
           $show = false,
           $env = 'prod';
 
-  function __construct($f = '', $sh = false, $env = 'prod') {
+  function __construct($f = '', $sh = false, $env = '') {
     // Start a user session on class instance
     session_start();
     // Check specified format
