@@ -35,6 +35,7 @@ You have to use this in every page that user must be logged in to view
 // returns true if user is logged in and false if not logged in
 $p->loggedIn();
 ```
+
 ### To log out and destroy session
 ```php
 // This will log user out and redirect to homepage (index.php)
@@ -45,3 +46,6 @@ $p->logOut();
 // Use this to logout and redirect to nice.php
 $p->logOut('nice.php');
 ```
+
+### Increase number of login trials
+To increase the number of login trials, you can change private variable in the passwordless class file. The variable name is `trial`.
