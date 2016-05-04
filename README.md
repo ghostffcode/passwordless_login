@@ -25,8 +25,12 @@ $p->sendCode('trial@example.com');  // pass email as argument to sendCode() meth
 ### Verify code that user enters
 ```php
 $code = 23456;
+$trial = 5;
 // Add user code to validate() method
-$p->validate($code); //will log user in if successful
+// Takes two arguments
+// First is code from the user email
+// Second argument (optional) is number of login trials. Default is 3 trials
+$p->validate($code [, $trial]); //will log user in if successful
 ```
 
 ### Check if user is logged in
@@ -48,4 +52,4 @@ $p->logOut('nice.php');
 ```
 
 ### Increase number of login trials
-To increase the number of login trials, you can change private variable in the passwordless class file. The variable name is `trial`.
+To increase the number of login trials, you can change private variable in the passwordless class file. The variable name is `$trial`.
