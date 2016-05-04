@@ -8,14 +8,17 @@ class passwordless {
 
   private $format = 'json';
   private $trial = 3;
+  $private $show = false;
 
-  function __construct($f = '') {
+  function __construct($f = '', $sh = false) {
     // Start a user session on class instance
     session_start();
     // Check specified format
     if (!empty($f) && $f == 'array') {
       $this->format = 'array';
     }
+    // Handle if code should be returned as part of result
+    ($sh) ? $this->show = true : $this->show = false;
   }
 
   public function sendCode ($email = '') {
@@ -37,8 +40,7 @@ class passwordless {
           // Set a trial counter in the session
           $_SESSION['trial'] = 0;
           $res['emailSuccess'] = true;
-          // comment out the line below if you want to remove code from results (recommended)
-          $res['code'] = $code;
+          ($this->show) ? $res['code'] = $code : $res['code'] = null;
         } else {
           $_SESSION['email'] = $email;
           $res['emailSuccess'] = false;
