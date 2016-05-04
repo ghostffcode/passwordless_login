@@ -7,7 +7,8 @@ error_reporting(-1);
 
 include 'inc/passwordless.php';
 
-$p = new passwordless('json', true);  // remove second argument in production
+// don't forget to change 2nd argument to 'prod' in prodcution mode
+$p = new passwordless('json', 'dev', true);  // remove third argument in production
 
 if (isset($_GET['code'])) {
   echo $p->validate($_GET['code']);
