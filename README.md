@@ -1,4 +1,4 @@
-# passwordless
+# passwordless Login
 Simple php passwordless login system
 
 ## How to use
