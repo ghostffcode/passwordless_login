@@ -37,12 +37,11 @@ class passwordless {
           // Set a trial counter in the session
           $_SESSION['trial'] = 0;
           $res['emailSuccess'] = true;
-          // comment the line below if you want to remove code from results (recommended)
+          // comment out the line below if you want to remove code from results (recommended)
           $res['code'] = $code;
         } else {
           $_SESSION['email'] = $email;
           $res['emailSuccess'] = false;
-          $res['code'] = $code;
         }
       } else {
         // Let user know that the email is invalid
@@ -177,14 +176,14 @@ class passwordless {
     return $res;
   }
 
-  public function logOut () {
+  public function logOut ($loc = 'index.php') {
     // This will log the user out
     // remove all session variables
     session_unset();
     // destroy the session
     session_destroy();
 
-    return true;
+    header("Location: $loc");
   }
 
 }
